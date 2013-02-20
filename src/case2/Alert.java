@@ -8,30 +8,23 @@ public class Alert {
     private final int rating;
     private final Date expiry;
     private final Date maturity;
-    private final int level;
+    private final AlertLevel level;
 
-    public Alert(double average, int rating, Date expiry) {
-        this.average = average;
-        this.rating = rating;
-        this.expiry = expiry;
-        this.maturity = null;
-        this.level = AlertLevel.NORMAL;
-    }
-
-    public Alert(double average, int rating, Date expiry, Date maturity) {
-        this.average = average;
-        this.rating = rating;
-        this.expiry = expiry;
-        this.maturity = maturity;
-        this.level = AlertLevel.NORMAL;
-    }
-
-    public Alert(double average, int rating, Date expiry, Date maturity, int level) {
+    public Alert(double average, int rating, Date expiry, Date maturity, AlertLevel level) {
         this.average = average;
         this.rating = rating;
         this.expiry = expiry;
         this.maturity = maturity;
         this.level = level;
+    }
+
+    public Alert(double average, int rating, Date expiry) {
+        this(average, rating, expiry, null, AlertLevel.NORMAL);
+    }
+
+    public Alert(double average, int rating, Date expiry, Date maturity) {
+        this(average, rating, expiry, maturity, AlertLevel.NORMAL);
+
     }
 
     public double getAverage() {
@@ -51,16 +44,14 @@ public class Alert {
     }
 
     public boolean isHighLevel() {
-        return level == AlertLevel.HIGH;
+        return level.isHighLevel(this);
     }
 
     public boolean isNormalLevel() {
-        return level == AlertLevel.NORMAL;
+        return level.isNormalLevel(this);
     }
 
     public boolean isLowLevel() {
-        return level == AlertLevel.LOW;
+        return level.isLowLevel(this);
     }
-    
-    
 }
